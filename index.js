@@ -11,10 +11,10 @@ app.use(cors()); // Дозволяємо запити з фронтенду
 app.use(express.json()); // Дозволяємо серверу розуміти JSON у тілі запитів (POST/PUT)
 
 // Тестовий маршрут: витягуємо дані з тестової таблиці
-app.get('/api/test', async (req, res) => {
+app.get('/api/recruitment_centers', async (req, res) => {
   try {
     // ЗАМІНИ "test_table" на реальну назву твоєї таблиці в Neon
-    const result = await client.query('SELECT * FROM playing_with_neon;'); 
+    const result = await client.query('SELECT * FROM recruitment_centers;'); 
     
     // Відправляємо результат на фронтенд у форматі JSON
     res.json(result.rows); 
