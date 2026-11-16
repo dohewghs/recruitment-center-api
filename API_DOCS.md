@@ -12,7 +12,7 @@
 
 **Базова адреса (Base URL):**  
 - Локально: `http://localhost:3000`
-- У хмарі (Production): *[тут буде посилання на Render, коли дороблю]*
+- У хмарі (Production): *[https://recruitment-center-api.onrender.com]*
 
 ### Приклади доступних маршрутів (Endpoints)
 
