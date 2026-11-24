@@ -1,3 +1,13 @@
+async function executeQuery(res, sql, params = []) {
+  try {
+    const result = await client.query(sql, params);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Помилка сервера при виконанні запиту' });
+  }
+}
+
 const express = require('express');
 const cors = require('cors');
 const client = require('./db');
@@ -11,17 +21,8 @@ app.use(cors()); // Дозволяємо запити з фронтенду
 app.use(express.json()); // Дозволяємо серверу розуміти JSON у тілі запитів (POST/PUT)
 
 // Тестовий маршрут: витягуємо дані з тестової таблиці
-app.get('/api/recruitment_centers', async (req, res) => {
-  try {
-    // ЗАМІНИ "test_table" на реальну назву твоєї таблиці в Neon
-    const result = await client.query('SELECT * FROM recruitment_centers;'); 
-    
-    // Відправляємо результат на фронтенд у форматі JSON
-    res.json(result.rows); 
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Помилка сервера при виконанні запиту' });
-  }
+app.get('/api/recruitment_centers', (req, res) => {
+  executeQuery(res, 'SELECT * FROM recruitment_centers;');
 });
 
 // Запуск сервера
