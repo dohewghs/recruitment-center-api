@@ -5,3 +5,5 @@ const loadSql = (fileName) => {
   const filePath = path.join(__dirname, '../queriesSQL', fileName);
   return fs.readFileSync(filePath, 'utf-8');
 };
+
+module.exports = loadSql;
