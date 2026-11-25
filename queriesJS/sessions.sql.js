@@ -1,5 +1,6 @@
 const loadSql = require('./index');
 
 module.exports = {
-    getByProvidedInCertainCenter: loadSql('6.sql')
+    getByProvidedInCertainCenter_n: loadSql('6_name.sql'),
+    getByProvidedInCertainCenter_id: loadSql('6_id.sql')
 };
