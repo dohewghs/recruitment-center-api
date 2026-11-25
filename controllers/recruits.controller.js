@@ -1,36 +1,41 @@
-const pool = require('../db');
 const queries = require('../queriesJS/recruits.sql');
+const executeQuery = require('./executeQuery')
 
 const getByAppointmentDate = async (req, res) => {
-    try {
-        const result = await pool.query(queries.getByAppointmentDate);
-        res.json(result.rows);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Помилка виконання запиту' });
-    }
+    executeQuery(res, queries.getByAppointmentDate);
 };
 
+const getMin3Courses = async (req, res) => {
+    executeQuery(res, queries.getMin3Courses);
+};
 
+const getByMaxMark = async (req, res) => {
+    executeQuery(res, queries.getByMaxMark);
+};
 
+const getThatInFewSubdivision = async (req, res) => {
+    executeQuery(res, queries.getThatInFewSubdivision);
+};
+
+const getByMaxTrainingCount = async (req, res) => {
+    executeQuery(res, queries.getByMaxTrainingCount);
+};
 
 const getByNMissedSessions = async (req, res) => {
-    try {
-        const {title, n} = req.query;
+    const {title, n} = req.query;
 
-        if (!title || n === undefined) {
-            return res.status(400).json({ error: 'Потрібні параметри title та n' });
-        }
-
-        const result = await pool.query(queries.getByNMissedSessions, [title, parseInt(n, 10)]);
-        res.json(result.rows);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Помилка виконання запиту' });
+    if (!title || n === undefined) {
+        return res.status(400).json({ error: 'Потрібні параметри title та n' });
     }
+    
+    executeQuery(res, queries.getByNMissedSessions, [title, parseInt(n, 10)]);
 };
 
 module.exports = {
     getByAppointmentDate,
+    getMin3Courses,
+    getByMaxMark,
+    getThatInFewSubdivision,
+    getByMaxTrainingCount,
     getByNMissedSessions
 };
