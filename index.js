@@ -7,27 +7,25 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const recruitsRoutes = require('./routes/recruits.routes');
-
-async function executeQuery(res, sql, params = []) {
-  try {
-    const result = await client.query(sql, params);
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Помилка сервера при виконанні запиту' });
-  }
-}
+const centersRoutes = require('./routes/centers.routes');
+const instructorsRoutes = require('./routes/instructors.routes');
+const inventoryRoutes = require('./routes/inventory.routes');
+const marksRoutes = require('./routes/marks.routes');
+const sessionsRoutes = require('./routes/sessions.routes');
+const subdivisionsRoutes = require('./routes/subdivisions.routes');
 
 // Middleware (проміжні обробники)
 app.use(cors()); // Дозволяємо запити з фронтенду
 app.use(express.json()); // Дозволяємо серверу розуміти JSON у тілі запитів (POST/PUT)
 
-// Тестовий маршрут: витягуємо дані з тестової таблиці
-app.get('/api/recruitment_centers', (req, res) => {
-  executeQuery(res, 'SELECT * FROM recruitment_centers;');
-});
-
+// маршрути
+app.use('/api/centers', centersRoutes);
+app.use('/api/instructors', instructorsRoutes);
+app.use('/api/inventory', inventoryRoutes);
+app.use('/api/marks', marksRoutes);
 app.use('/api/recruits', recruitsRoutes);
+app.use('/api/sessions', sessionsRoutes);
+app.use('/api/subdivisions', subdivisionsRoutes);
 
 // Запуск сервера
 app.listen(port, () => {
